@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'ShoppingMall',
   data () {
@@ -35,6 +36,18 @@ export default {
         {imageUrl: 'http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic003.jpg'}
       ]
     }
+  },
+  created () {
+    axios({
+      url: 'https://www.easy-mock.com/mock/5b5b3c42fbbb0c35ff88bfba/',
+      method: 'get'
+    })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>
