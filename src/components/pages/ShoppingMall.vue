@@ -23,17 +23,36 @@
     <div class="type-bar">
       <div v-for="(cate,index) in category" :key="index" class="type-item">
         <img v-lazy="cate.image" width="90%">
-        <span>{{cate.mallCategoryName}}</span>
+        <div>{{cate.mallCategoryName}}</div>
       </div>
     </div>
     <div class="ad-banner">
       <img v-lazy="adBanner.PICTURE_ADDRESS" width="100%">
+    </div>
+    <div class="recommend-area">
+      <div class="recommend-title">
+        商品推荐
+      </div>
+      <div class="recommend-body">
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="(item, index) in recommendGoods" :key="index">
+            <div class="recommend-item">
+              <img :src="item.image" width="80%">
+              <div>{{item.goodsName}}</div>
+              <div>￥{{item.price}}(￥{{item.mallPrice}})</div>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import 'swiper/dist/css/swiper.css'
+import {swiper, swiperSlide} from 'vue-awesome-swiper'
+
 export default {
   name: 'ShoppingMall',
   data () {
@@ -41,8 +60,13 @@ export default {
       locationIcon: require('../../assets/images/location.png'),
       bannerPicArray: [],
       category: '',
-      adBanner: ''
+      adBanner: '',
+      recommendGoods: []
     }
+  },
+  components: {
+    swiper,
+    swiperSlide
   },
   created () {
     axios({
@@ -55,7 +79,7 @@ export default {
           this.category = response.data.data.category
           this.adBanner = response.data.data.advertesPicture
           this.bannerPicArray = response.data.data.slides
-          console.log(this.bannerPicArray)
+          this.recommendGoods = response.data.data.recommend
         }
       })
       .catch(error => {
@@ -90,7 +114,7 @@ export default {
   background-color: #cccccc
   border: 0px
 .swiper-area
-  width: 20rem
+  width: 100vw
   height: 0
   overflow: hidden
   padding-bottom: 44.444%
@@ -106,8 +130,23 @@ export default {
   font-size: 14px
   flex-wrap: nowrap
 .type-item
-  width: 4rem
+  width: 20vw
   padding: .3rem
+  font-size: 12px
+  text-align: center
+.recommend-area
+  background-color: #fff
+  margin-top: .3rem
+.recommend-title
+  border-bottom: 1px solid #eeeeee
+  font-size: 14px
+  padding: .2rem
+  color: #e5017d
+.recommend-body
+  border-bottom: 1px solid #eee
+.recommend-item
+  width: 99%
+  border-right: 1px solid #eeeeee
   font-size: 12px
   text-align: center
 </style>
