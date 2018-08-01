@@ -34,7 +34,7 @@
         商品推荐
       </div>
       <div class="recommend-body">
-        <swiper :options="swiperOption">
+        <swiper>
           <swiper-slide v-for="(item, index) in recommendGoods" :key="index">
             <div class="recommend-item">
               <img :src="item.image" width="80%">
@@ -45,7 +45,11 @@
         </swiper>
       </div>
     </div>
-    <div class="floor-title">
+    <floorComponent :floorData="floor1"></floorComponent>
+    <floorComponent :floorData="floor2"></floorComponent>
+    <floorComponent :floorData="floor3"></floorComponent>
+
+    <!-- <div class="floor-title">
       <div class="floor-num">1F</div>
       <div class="floor-content">休闲食品</div>
     </div>
@@ -68,7 +72,7 @@
       <div v-for="(item, index) in floor1.slice(3)" :key="index">
         <img :src="item.image" width="100%">
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -77,6 +81,7 @@ import axios from 'axios'
 import 'swiper/dist/css/swiper.css'
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
 import swiperDefault from '../swiper/swiperDefault'
+import floorComponent from '../component/floorComponent'
 
 export default {
   name: 'ShoppingMall',
@@ -87,13 +92,16 @@ export default {
       category: '',
       adBanner: '',
       recommendGoods: [],
-      floor1: []
+      floor1: [],
+      floor2: [],
+      floor3: []
     }
   },
   components: {
     swiper,
     swiperSlide,
-    swiperDefault
+    swiperDefault,
+    floorComponent
   },
   created () {
     axios({
@@ -108,9 +116,8 @@ export default {
           this.bannerPicArray = response.data.data.slides
           this.recommendGoods = response.data.data.recommend
           this.floor1 = response.data.data.floor1
-          this.floor1_0 = this.floor1[0]
-          this.floor1_1 = this.floor1[1]
-          this.floor1_2 = this.floor1[2]
+          this.floor2 = response.data.data.floor2
+          this.floor3 = response.data.data.floor3
         }
       })
       .catch(error => {
@@ -180,46 +187,46 @@ export default {
   border-right: 1px solid #eeeeee
   font-size: 12px
   text-align: center
-.floor-title
-  height: 2rem
-  line-height: 2rem
-  display: flex
-  justify-content: center
-  background-color: #efefef
-.floor-num
-  width: 1.5rem
-  height: 1.5rem
-  margin: .2rem .4rem 0 0
-  line-height: 1.5rem
-  text-align: center
-  color: #ffffff
-  border-radius: 50%
-  background-color: #d54418
-.floor-content
-  color: #d54418
-.floor-anomaly
-  display: flex
-  flex-direction: row
-  background-color: #fff
-  border-bottom: 1px solid #dddddd
-.footer-anomaly div
-  width: 10rem
-  box-sizing: border-box
-  -webkit-box-sizing: border-box
-.floor-one
-  border-right: 1px solid #dddddd
-.floor-two
-  border-bottom: 1px solid #dddddd
-.floor-rule
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  background-color: #ffffff
-.floor-rule div
-  -webkit-box-sizing: border-box
-  box-sizing: border-box
-  width: 10rem
-  border-bottom: 1px solid #dddddd
-.floor-rule div:nth-child(odd)
-  border-right: 1px solid #dddddd
+// .floor-title
+//   height: 2rem
+//   line-height: 2rem
+//   display: flex
+//   justify-content: center
+//   background-color: #efefef
+// .floor-num
+//   width: 1.5rem
+//   height: 1.5rem
+//   margin: .2rem .4rem 0 0
+//   line-height: 1.5rem
+//   text-align: center
+//   color: #ffffff
+//   border-radius: 50%
+//   background-color: #d54418
+// .floor-content
+//   color: #d54418
+// .floor-anomaly
+//   display: flex
+//   flex-direction: row
+//   background-color: #fff
+//   border-bottom: 1px solid #dddddd
+// .footer-anomaly div
+//   width: 10rem
+//   box-sizing: border-box
+//   -webkit-box-sizing: border-box
+// .floor-one
+//   border-right: 1px solid #dddddd
+// .floor-two
+//   border-bottom: 1px solid #dddddd
+// .floor-rule
+//   display: flex
+//   flex-direction: row
+//   flex-wrap: wrap
+//   background-color: #ffffff
+// .floor-rule div
+//   -webkit-box-sizing: border-box
+//   box-sizing: border-box
+//   width: 10rem
+//   border-bottom: 1px solid #dddddd
+// .floor-rule div:nth-child(odd)
+//   border-right: 1px solid #dddddd
 </style>
