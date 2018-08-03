@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="floor-title">
-      <div class="floor-num">1F</div>
-      <div class="floor-content">休闲食品</div>
+      <div class="floor-num">{{floorNum}}</div>
+      <div class="floor-content">{{floorName}}</div>
     </div>
     <div class="floor">
       <div class="floor-anomaly">
@@ -30,7 +30,11 @@
 <script>
 export default {
   name: 'floorComponent',
-  props: ['floorData'],
+  props: [
+    'floorData',
+    'floorName',
+    'floorNum'
+  ],
   data () {
     return {
       floorData0: {},
