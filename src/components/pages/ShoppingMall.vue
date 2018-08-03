@@ -45,9 +45,9 @@
         </swiper>
       </div>
     </div>
-    <floorComponent :floorData="floor1"></floorComponent>
-    <floorComponent :floorData="floor2"></floorComponent>
-    <floorComponent :floorData="floor3"></floorComponent>
+    <floorComponent :floorData="floor1" floorNum='1F' :floorName="floorName.floor1"></floorComponent>
+    <floorComponent :floorData="floor2" floorNum='2F' :floorName="floorName.floor2"></floorComponent>
+    <floorComponent :floorData="floor3" floorNum='3F' :floorName="floorName.floor3"></floorComponent>
 
     <!-- <div class="floor-title">
       <div class="floor-num">1F</div>
@@ -94,7 +94,8 @@ export default {
       recommendGoods: [],
       floor1: [],
       floor2: [],
-      floor3: []
+      floor3: [],
+      floorName: ''
     }
   },
   components: {
@@ -118,6 +119,7 @@ export default {
           this.floor1 = response.data.data.floor1
           this.floor2 = response.data.data.floor2
           this.floor3 = response.data.data.floor3
+          this.floorName = response.data.data.floorName
         }
       })
       .catch(error => {
@@ -129,7 +131,7 @@ export default {
 
 <style lang="stylus" scoped>
 .search-bar
-  height: 2.2rem
+  height: 2.4rem
   background-color: #e5017d
   line-height: 2.2rem
 .search-content, .icon
@@ -148,7 +150,7 @@ export default {
   background-color: #e5017d
   color: #ffffff
 .search-btn
-  margin-left: .5rem
+  margin-left: 1.2rem
   background-color: #cccccc
   border: 0px
 .swiper-area
