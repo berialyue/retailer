@@ -8,6 +8,9 @@ Vue.use(Button).use(Row).use(Col).use(Search).use(Swipe).use(SwipeItem).use(Lazy
 
 Vue.config.productionTip = false
 
+// Vue.filter('dateformat', function (input, formatstring) {
+//   return moment(input).format(formatstring)
+// })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
