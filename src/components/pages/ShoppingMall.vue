@@ -48,30 +48,16 @@
     <floorComponent :floorData="floor1" floorNum='1F' :floorName="floorName.floor1"></floorComponent>
     <floorComponent :floorData="floor2" floorNum='2F' :floorName="floorName.floor2"></floorComponent>
     <floorComponent :floorData="floor3" floorNum='3F' :floorName="floorName.floor3"></floorComponent>
-    <!-- <div class="floor-title">
-      <div class="floor-num">1F</div>
-      <div class="floor-content">休闲食品</div>
-    </div>
-    <div class="floor">
-      <div class="floor-anomaly">
-        <div class="floor-one">
-          <img :src="floor1_0.image" width="100%" />
-        </div>
-        <div>
-          <div class="floor-two">
-            <img :src="floor1_1.image" width="100%" />
-          </div>
-          <div>
-            <img :src="floor1_2.image" width="100%" />
-          </div>
-        </div>
+    <div class="hot-area">
+      <div class="hot-title">热卖商品</div>
+      <div class="hot-goods">
+        <van-row gutter="20">
+          <van-col span="12" v-for="(item,index) in hotGoods" :key="index">
+            <goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goods-info>
+          </van-col>
+        </van-row>
       </div>
     </div>
-    <div class="floor-rule">
-      <div v-for="(item, index) in floor1.slice(3)" :key="index">
-        <img :src="item.image" width="100%">
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -82,6 +68,7 @@ import {swiper, swiperSlide} from 'vue-awesome-swiper'
 import swiperDefault from '../swiper/swiperDefault'
 import floorComponent from '../component/floorComponent'
 import { toMoney } from '../../filter/moneyFilter.js'
+import goodsInfo from '../component/goodsInfoComponent'
 
 export default {
   name: 'ShoppingMall',
@@ -95,14 +82,16 @@ export default {
       floor1: [],
       floor2: [],
       floor3: [],
-      floorName: ''
+      floorName: '',
+      hotGoods: []
     }
   },
   components: {
     swiper,
     swiperSlide,
     swiperDefault,
-    floorComponent
+    floorComponent,
+    goodsInfo
   },
   filters: {
     moneyFilter (money) {
@@ -125,6 +114,7 @@ export default {
           this.floor2 = response.data.data.floor2
           this.floor3 = response.data.data.floor3
           this.floorName = response.data.data.floorName
+          this.hotGoods = response.data.data.hotGoods
         }
       })
       .catch(error => {
@@ -194,46 +184,9 @@ export default {
   border-right: 1px solid #eeeeee
   font-size: 12px
   text-align: center
-// .floor-title
-//   height: 2rem
-//   line-height: 2rem
-//   display: flex
-//   justify-content: center
-//   background-color: #efefef
-// .floor-num
-//   width: 1.5rem
-//   height: 1.5rem
-//   margin: .2rem .4rem 0 0
-//   line-height: 1.5rem
-//   text-align: center
-//   color: #ffffff
-//   border-radius: 50%
-//   background-color: #d54418
-// .floor-content
-//   color: #d54418
-// .floor-anomaly
-//   display: flex
-//   flex-direction: row
-//   background-color: #fff
-//   border-bottom: 1px solid #dddddd
-// .footer-anomaly div
-//   width: 10rem
-//   box-sizing: border-box
-//   -webkit-box-sizing: border-box
-// .floor-one
-//   border-right: 1px solid #dddddd
-// .floor-two
-//   border-bottom: 1px solid #dddddd
-// .floor-rule
-//   display: flex
-//   flex-direction: row
-//   flex-wrap: wrap
-//   background-color: #ffffff
-// .floor-rule div
-//   -webkit-box-sizing: border-box
-//   box-sizing: border-box
-//   width: 10rem
-//   border-bottom: 1px solid #dddddd
-// .floor-rule div:nth-child(odd)
-//   border-right: 1px solid #dddddd
+.hot-area
+  text-align: center
+  font-size: 14px
+  height: 1.8rem
+  line-height: 1.8rem
 </style>
