@@ -69,6 +69,7 @@ import swiperDefault from '../swiper/swiperDefault'
 import floorComponent from '../component/floorComponent'
 import { toMoney } from '../../filter/moneyFilter.js'
 import goodsInfo from '../component/goodsInfoComponent'
+import url from '@/serviceAPI.config.js'
 
 export default {
   name: 'ShoppingMall',
@@ -100,7 +101,7 @@ export default {
   },
   created () {
     axios({
-      url: 'https://www.easy-mock.com/mock/5b5b3c42fbbb0c35ff88bfba/',
+      url: url.getShoppingMallInfo,
       method: 'get'
     })
       .then(response => {
