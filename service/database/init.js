@@ -1,7 +1,13 @@
 const mongoose = require('mongoose')
 const db = 'mongodb://localhost/simle-db'
+const glob = require('glob')
+const { resolve } = require('path')
 
 mongoose.Promise = global.Promise
+
+exports.initSchemas = () => {
+  glob.sync(resolve(__dirname, './schema/', '**/*.js')).forEach(require)
+}
 
 exports.connect = () => {
   // 连接数据库
@@ -16,7 +22,7 @@ exports.connect = () => {
       console.log('**********************数据库断开**********************')
       if (maxConnectTimes < 3) {
         maxConnectTimes++
-        mongoose.connect(db)
+        mongoose.connect(db, {useNewUrlParser: true})
       } else {
         reject(new Error('数据库出现问题，请手动修复'))
       }
@@ -27,7 +33,7 @@ exports.connect = () => {
       console.log('**********************数据库断开**********************')
       if (maxConnectTimes < 3) {
         maxConnectTimes++
-        mongoose.connect(db)
+        mongoose.connect(db, {useNewUrlParser: true})
       } else {
         reject(err)
         throw new Error('数据库出现问题，请手动修复')
