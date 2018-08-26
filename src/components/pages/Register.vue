@@ -15,6 +15,7 @@
             placeholder="请输入用户名"
             required
             @click-icon="username = ''"
+             :error-message="usernameErrorMsg"
         />
 
         <van-field
@@ -23,9 +24,10 @@
             label="密码"
             placeholder="请输入密码"
             required
+            :error-message="passwordErrorMsg"
         />
         <div class="register-button">
-            <van-button type="primary" @click="axiosRegisterUser" :loading="openLoading" size="large">马上注册</van-button>
+            <van-button type="primary" @click="registerAction" :loading="openLoading" size="large">马上注册</van-button>
         </div>
        </div>
 
@@ -42,10 +44,31 @@ export default {
     return {
       username: '',
       password: '',
-      openLoading: false
+      openLoading: false,
+      usernameErrorMsg: '',
+      passwordErrorMsg: ''
     }
   },
   methods: {
+    checkForm () {
+      let isOk = true
+      if (this.username.length < 5) {
+        this.usernameErrorMsg = '用户名不能小于5位'
+        isOk = false
+      } else {
+        this.usernameErrorMsg = ''
+      }
+      if (this.password.length < 6) {
+        this.passwordErrorMsg = '密码不能少于6位'
+        isOk = false
+      } else {
+        this.passwordErrorMsg = ''
+      }
+      return isOk
+    },
+    registerAction () {
+      this.checkForm() && this.axiosRegisterUser()
+    },
     goBack () {
       this.$router.go(-1)
     },
