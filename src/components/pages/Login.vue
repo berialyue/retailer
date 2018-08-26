@@ -1,13 +1,13 @@
 <template>
     <div>
        <van-nav-bar
-        title="用户注册"
+        title="用户登录"
         left-text="返回"
         left-arrow
         @click-left="goBack"
         />
 
-        <div class="register-panel">
+        <div class="login-panel">
         <van-field
             v-model="username"
             label="用户名"
@@ -26,8 +26,8 @@
             required
             :error-message="passwordErrorMsg"
         />
-        <div class="register-button">
-            <van-button type="primary" @click="registerAction" :loading="openLoading" size="large">马上注册</van-button>
+        <div class="login-button">
+            <van-button type="primary" @click="LoginAction" :loading="openLoading" size="large">登录</van-button>
         </div>
        </div>
 
@@ -66,13 +66,13 @@ export default {
       }
       return isOk
     },
-    registerAction () {
-      this.checkForm() && this.axiosRegisterUser()
+    LoginAction () {
+      this.checkForm() && this.axiosLoginUser()
     },
     goBack () {
       this.$router.go(-1)
     },
-    axiosRegisterUser () {
+    axiosLoginUser () {
       this.openLoading = true
       axios({
         url: url.registerUser,
@@ -86,18 +86,18 @@ export default {
           console.log(response)
           // 如果返回code为200，代表注册成功，给用户Toast提示
           if (response.data.code === 200) {
-            Toast.success('注册成功')
+            Toast.success('登录成功')
             this.$router.push('/')
           } else {
             console.log(response.data.message)
-            Toast.fail('注册失败')
+            Toast.fail('登录失败')
             this.openLoading = false
           }
           console.log(response.data.code)
         })
         .catch((error) => {
           console.log(error)
-          Toast.fail('注册失败')
+          Toast.fail('登录失败')
           this.openLoading = false
         })
     }
@@ -106,13 +106,13 @@ export default {
 </script>
 
 <style scoped>
-    .register-panel{
+    .login-panel{
         width:96%;
         border-radius: 5px;
         margin:20px auto;
         padding-bottom:50px;
     }
-    .register-button{
+    .login-button{
         padding-top:10px;
     }
 </style>
