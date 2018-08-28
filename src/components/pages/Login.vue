@@ -49,6 +49,12 @@ export default {
       passwordErrorMsg: ''
     }
   },
+  created () {
+    if (localStorage.userInfo) {
+      Toast.success('您已经登录过了')
+      this.$router.push('/')
+    }
+  },
   methods: {
     checkForm () {
       let isOk = true
@@ -75,7 +81,7 @@ export default {
     axiosLoginUser () {
       this.openLoading = true
       axios({
-        url: url.registerUser,
+        url: url.login,
         method: 'post',
         data: {
           username: this.username,
@@ -85,9 +91,18 @@ export default {
         .then(response => {
           console.log(response)
           // 如果返回code为200，代表注册成功，给用户Toast提示
-          if (response.data.code === 200) {
-            Toast.success('登录成功')
-            this.$router.push('/')
+          if (response.data.code === 200 && response.data.message) {
+            new Promise((resolve, reject) => {
+              localStorage.userInfo = {userName: this.username}
+              setTimeout(() => { resolve() }, 500)
+            }).then(() => {
+              Toast.success('登录成功')
+              this.$router.push('/')
+            }).catch(error => {
+              console.log(error)
+              Toast.fail('登录状态保存失败')
+              this.$router.push('/')
+            })
           } else {
             console.log(response.data.message)
             Toast.fail('登录失败')
